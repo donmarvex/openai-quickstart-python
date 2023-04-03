@@ -3,19 +3,42 @@
   <title>OpenAI Quickstart</title>
   <link
     rel="shortcut icon"
-    href="{{ url_for('static', filename='dog.png') }}"
+    href="{{ url_for('static', filename='alat_logo.png', width=1000) }}"
   />
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 </head>
 
 <body>
-  <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
-  <h3>Name my pet</h3>
+  <img src="{{ url_for('static', filename='alat_logo.png') }}" class="icon" />
+  <h3>ALAT CHATBOT</h3>
   <form action="/" method="post">
-    <input type="text" name="animal" placeholder="Enter an animal" required />
-    <input type="submit" value="Generate names" />
+    <input type="text" name="query" placeholder="Enter your query" required />
+    <input type="submit" value="Submit" />
   </form>
   {% if result %}
-  <div class="result">{{ result }}</div>
+  <div id="result">{{ result }}</div>
+      <script>
+        // Get the text content of the HTML element
+        const text = document.getElementById('result').textContent;
+
+        // Split the text into individual words
+        const words = text.split(' ');
+
+        // Set up a counter to keep track of the current word
+        let wordCounter = 0;
+
+        // Display the first word immediately
+        document.getElementById('result').textContent = words[wordCounter];
+
+        // Increment the counter and display the next word every 1000 milliseconds (1 second)
+        const interval = setInterval(function () {
+            wordCounter++;
+            if (wordCounter < words.length) {
+                document.getElementById('result').textContent += ' ' + words[wordCounter];
+            } else {
+                clearInterval(interval);
+            }
+        }, 300);
+      </script>
   {% endif %}
 </body>

@@ -7,29 +7,36 @@ app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
+# model_engine = "text-davinci-002"
+
+
 @app.route("/", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
-        animal = request.form["animal"]
+        query = request.form["query"]
+        query = query.strip()
+        query += "\n\n###\n\n"  # " ->"
+        print(query)
         response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=generate_prompt(animal),
-            temperature=0.6,
+            model= 'ada:ft-chatbot-test-2023-04-02-22-40-55',
+            # 'ada:ft-chatbot-test-2023-04-02-06-46-52',
+            # 'ada:ft-brokemenot-llc-2023-03-28-21-30-05',
+            # 'ada:ft-brokemenot-llc-2023-03-21-19-49-43',
+            # 'curie:ft-brokemenot-llc-2023-03-09-06-12-37',
+            # 'ada:ft-brokemenot-llc-2023-03-09-04-15-52',  # 'davinci:ft-brokemenot-llc-2023-03-07-19-46-06',
+            prompt=generate_prompt(query),
+            temperature=0.0,
+            top_p=0.99,
+            n=1,
+            max_tokens=70,
+            stop=["\n"]  # " ###STOP###"
         )
+        print(response)
         return redirect(url_for("index", result=response.choices[0].text))
 
     result = request.args.get("result")
     return render_template("index.html", result=result)
 
 
-def generate_prompt(animal):
-    return """Suggest three names for an animal that is a superhero.
-
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: {}
-Names:""".format(
-        animal.capitalize()
-    )
+def generate_prompt(query):
+    return query.capitalize()
