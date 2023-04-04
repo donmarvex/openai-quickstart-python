@@ -8,6 +8,7 @@ app = Flask(__name__)
 openai.api_key = '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'
 
 # model_engine = "text-davinci-002"
+print(openai.api_key)
 
 
 @app.route("/", methods=("GET", "POST"))
