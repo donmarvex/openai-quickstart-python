@@ -5,10 +5,10 @@ from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 # openai.api_key = os.getenv("OPENAI_API_KEY")
-openai.api_key=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
+# openai.api_key= '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'
 
 # model_engine = "text-davinci-002"
-print("This is the key" + openai.api_key)
+print("This is the key " + openai.api_key)
 
 
 @app.route("/", methods=("GET", "POST"))
