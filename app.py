@@ -4,8 +4,8 @@ import openai
 from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
+# openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = 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
 
 # model_engine = "text-davinci-002"
 
